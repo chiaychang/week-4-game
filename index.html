@@ -106,6 +106,7 @@ $(document).ready(function() {
 
        if(totalScore === targetNumber){
             alert("You won!");
+            $("#total-score").text(totalScore);
             win++;
             $("#win").text(win);
             
@@ -113,6 +114,7 @@ $(document).ready(function() {
    
       else if(totalScore > targetNumber){
            alert("You lost!");
+           $("#total-score").text(totalScore);
            loss++;
            $("#loss").text(loss);
            
@@ -126,15 +128,15 @@ if(totalScore >= targetNumber){
   $("#targetNumber").text(targetNumber);
   console.log(targetNumber);
 
-//get random numbers for crystals
-   crystalNumber = [];
-  for (var i = 0; i < 4; i++) {
-    crystalNumber[i]= Math.floor(Math.random() * 12) + 1;
+//get random numbers for new crystals
+crystalNumber = [];
+  for (var z = 0; z < 4; z++) {
+    crystalNumber[z]= Math.floor(Math.random() * 12) + 1;
     console.log(crystalNumber);
-
+    crystalImages.attr("crystal-value",crystalNumber[z]);
+  }
 
   }
-}
 
           
 });
