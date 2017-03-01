@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="eng">
 <head>
-	<title>Cyrstal Collector Game</title>
+	<title>Crystal Collector Game</title>
 	<link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -59,6 +59,11 @@ $(document).ready(function() {
   var totalScore = 0;
   var win = 0;
   var loss = 0;
+  
+  $("#total-score").text(totalScore);
+  $("#win").text(win);
+  $("#loss").text(loss);
+
 
 //get the random target score
   var targetNumber = Math.floor(Math.random() * 120) + 19 ;
@@ -96,36 +101,38 @@ $(document).ready(function() {
 // We then add the crystalValue to the user's "totalscore" which is a global variable.
 // Every click, from every crystal adds to the global totalscore.
        totalScore += crystalValue;
-       $("#total-score").html(totalScore);
+       $("#total-score").text(totalScore);
    
 
        if(totalScore === targetNumber){
             alert("You won!");
             win++;
-            $("#win").html(win);
+            $("#win").text(win);
             
        }
    
       else if(totalScore > targetNumber){
            alert("You lost!");
            loss++;
-           $("#loss").html(loss);
+           $("#loss").text(loss);
            
 }
 
 if(totalScore >= targetNumber){
     totalScore = 0;
+     $("#total-score").text(totalScore);
     //get the random target score
    targetNumber = Math.floor(Math.random() * 120) + 19 ;
   $("#targetNumber").text(targetNumber);
   console.log(targetNumber);
-
 
 //get random numbers for crystals
    crystalNumber = [];
   for (var i = 0; i < 4; i++) {
     crystalNumber[i]= Math.floor(Math.random() * 12) + 1;
     console.log(crystalNumber);
+
+
   }
 }
 
