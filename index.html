@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+	<title>Cyrstal Collector Game</title>
+	<link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+    
+     <style type="text/css">
+
+    .crystal-image {
+     width: 150px;
+      height: 150px;
+    }
+
+     </style>
+
+</head>
+
+<body>
+
+<div class="header text-center"><h1>Crystal Collector!</h1></div>
+  
+<!-- target number; renew every time game resets -->
+ <div class="text-danger text-center"><h2>Target Number: <span id="targetNumber"></span></h2></div>
+
+<!--  game rules -->
+  <div class="container-fluid">
+
+    <ul class="list-group text-center">
+		<li class="list-group-item list-group-item-warning"> 
+    You will be given a random number at the start of the game.<br> 
+    There are four crystals below. By clicking on a crystal you will add a specific amount of points to your total score.<br>
+    You win the game by matching your total score to the random number.<br>
+    You lose the game if your total score goes above the random target number.<br>
+    Each time the game starts, the game will change the values of each crystal.</li>
+    </ul>
+
+  </div>
+
+ <!--  place to hold crystals -->
+  <div id="crystals" class="text-center"></div>
+
+<!--  place to show total score/wins/losses -->
+  <div id="gameStatus" class="text-center">
+      <h3 class="text-danger">Current Total Score:<div id="total-score"></div></h3>
+      <h3>Wins: <span id="win"></span></h3>
+      <h3>Losses: <span id="loss"></span> </h3>
+    </div>
+  </div>
+
+<!-- Javacript and jQuery -->
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+  var totalScore = 0;
+  var win = 0;
+  var loss = 0;
+
+//get the random target score
+  var targetNumber = Math.floor(Math.random() * 120) + 19 ;
+  $("#targetNumber").text(targetNumber);
+  console.log(targetNumber);
+
+//get random numbers for crystals
+  var crystalNumber = [];
+  for (var i = 0; i < 4; i++) {
+    crystalNumber[i]= Math.floor(Math.random() * 12) + 1;
+    console.log(crystalNumber);
+  }
+
+//get crystal imgages to appear in HTML; assign value to each image
+  var crystalLinks = ["assets/images/turquoise.jpg","assets/images/ruby.jpg","assets/images/diamond.jpg","assets/images/yellow.jpg"];
+  
+  for (var j = 0; j < 4; j++) {
+  
+  var crystalImages = $("<img>");
+  crystalImages.attr("crystal-value",crystalNumber[j]);
+  crystalImages.addClass("crystal-image");
+  crystalImages.attr("src",crystalLinks[j]);
+  $("#crystals").append(crystalImages);
+  
+  }
+
+//get stored crystal value when click on crystal image
+   $(".crystal-image").on("click", function() {
+
+         var crystalValue = ($(this).attr("crystal-value"));
+         console.log(crystalValue);
+         crystalValue = parseInt(crystalValue);
+
+//Since attributes on HTML elements are strings, we must convert it to an integer before adding to the counter
+// We then add the crystalValue to the user's "totalscore" which is a global variable.
+// Every click, from every crystal adds to the global totalscore.
+       totalScore += crystalValue;
+       $("#total-score").html(totalScore);
+   
+
+       if(totalScore === targetNumber){
+            alert("You won!");
+            win++;
+            $("#win").html(win);
+            
+       }
+   
+      else if(totalScore > targetNumber){
+           alert("You lost!");
+           loss++;
+           $("#loss").html(loss);
+           
+}
+
+if(totalScore >= targetNumber){
+    totalScore = 0;
+    //get the random target score
+   targetNumber = Math.floor(Math.random() * 120) + 19 ;
+  $("#targetNumber").text(targetNumber);
+  console.log(targetNumber);
+
+
+//get random numbers for crystals
+   crystalNumber = [];
+  for (var i = 0; i < 4; i++) {
+    crystalNumber[i]= Math.floor(Math.random() * 12) + 1;
+    console.log(crystalNumber);
+  }
+}
+
+          
+});
+
+});
+
+
+    
+
+
+
+</script>
+
+<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+<script type="text/javascript" src="assets/javascript/game.js"></script>  -->
+
+
+</body>
+</html>
