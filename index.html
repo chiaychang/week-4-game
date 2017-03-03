@@ -20,7 +20,7 @@
 </head>
 
 <body>
-
+<div class="container-fluid">
 <div class="header text-center"><h1>Crystal Collector!</h1></div>
   
 <!-- target number; renew every time game resets -->
@@ -39,6 +39,7 @@
     </ul>
 
   </div>
+  </div>
 
  <!--  place to hold crystals -->
   <div id="crystals" class="text-center"></div>
@@ -56,44 +57,63 @@
 
 $(document).ready(function() {
 
-  var totalScore = 0;
+ var crystalLinks = ["assets/images/turquoise.jpg","assets/images/ruby.jpg","assets/images/diamond.jpg","assets/images/yellow.jpg"];
+
   var win = 0;
   var loss = 0;
+  var totalScore = 0;
+  var targetNumber;
+  var crystalNumber;
+
+  //var gamereset = false;
   
-  $("#total-score").text(totalScore);
+  //$("#total-score").text(totalScore);
   $("#win").text(win);
   $("#loss").text(loss);
 
 
+//get crystal imgages to appear in HTML; assign value to each image
+var crystalImages =[];
+
+for (var j = 0; j < 4; j++) {
+  
+  crystalImages[j] = $("<img>");
+ 
+  crystalImages[j].addClass("crystal-image");
+  crystalImages[j].attr("src",crystalLinks[j]);
+  $("#crystals").append(crystalImages[j]);
+  
+}
+
+
+  
+function reset(){
+
+  totalScore = 0;
+  $("#total-score").text(totalScore);
 //get the random target score
-  var targetNumber = Math.floor(Math.random() * 120) + 19 ;
+  targetNumber = Math.floor(Math.random() * 120) + 19 ;
   $("#targetNumber").text(targetNumber);
   console.log(targetNumber);
 
 //get random numbers for crystals
-  var crystalNumber = [];
+  crystalNumber = [];
   for (var i = 0; i < 4; i++) {
     crystalNumber[i]= Math.floor(Math.random() * 12) + 1;
     console.log(crystalNumber);
+    crystalImages[i].data("crystal-value",crystalNumber[i]);
   }
+}
+ 
+  reset();
 
-//get crystal imgages to appear in HTML; assign value to each image
-  var crystalLinks = ["assets/images/turquoise.jpg","assets/images/ruby.jpg","assets/images/diamond.jpg","assets/images/yellow.jpg"];
-  
-  for (var j = 0; j < 4; j++) {
-  
-  var crystalImages = $("<img>");
-  crystalImages.attr("crystal-value",crystalNumber[j]);
-  crystalImages.addClass("crystal-image");
-  crystalImages.attr("src",crystalLinks[j]);
-  $("#crystals").append(crystalImages);
-  
-  }
+
 
 //get stored crystal value when click on crystal image
    $(".crystal-image").on("click", function() {
 
-         var crystalValue = ($(this).attr("crystal-value"));
+       
+        var crystalValue = ($(this).data("crystal-value"));
          console.log(crystalValue);
          crystalValue = parseInt(crystalValue);
 
@@ -109,6 +129,7 @@ $(document).ready(function() {
             $("#total-score").text(totalScore);
             win++;
             $("#win").text(win);
+            reset();
             
        }
    
@@ -117,26 +138,30 @@ $(document).ready(function() {
            $("#total-score").text(totalScore);
            loss++;
            $("#loss").text(loss);
-           
-}
-
-if(totalScore >= targetNumber){
-    totalScore = 0;
-     $("#total-score").text(totalScore);
-    //get the random target score
-   targetNumber = Math.floor(Math.random() * 120) + 19 ;
-  $("#targetNumber").text(targetNumber);
-  console.log(targetNumber);
-
-//get random numbers for new crystals
-crystalNumber = [];
-  for (var z = 0; z < 4; z++) {
-    crystalNumber[z]= Math.floor(Math.random() * 12) + 1;
-    console.log(crystalNumber);
-    crystalImages.attr("crystal-value",crystalNumber[z]);
+           reset();
   }
 
-  }
+//   if(gamereset){
+    
+//     totalScore = 0;
+//     $("#total-score").text(totalScore);
+   
+//     //get the new random target score
+//    targetNumber = Math.floor(Math.random() * 120) + 19 ;
+//    $("#targetNumber").text(targetNumber);
+//    console.log(targetNumber);
+
+// //get new random numbers for new crystals
+//    crystalNumber = [];
+//   for (var i = 0; i < 4; i++) {
+//     crystalNumber[i]= Math.floor(Math.random() * 12) + 1;
+//     console.log(crystalNumber);
+//   }
+//   crystalImages.data("crystal-value",crystalNumber[i]);
+  
+
+// }
+// }
 
           
 });
