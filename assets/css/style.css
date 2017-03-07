@@ -1,0 +1,13 @@
+body {
+	background: url("..//images/background.jpg");
+	
+}
+
+.crystal-image {
+     width: 150px;
+      height: 150px;
+    }
+
+.warning {
+	color: red;
+}
